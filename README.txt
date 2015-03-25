@@ -1,1 +1,1 @@
-Dies ist ein Projekt für ein anderes Projekt. Über die Sinnhaftigkeit beider Projekte lässt sich ausgiebig streiten; insbesondere über die Kombination.
+Dies ist ein Projekt für ein anderes Projekt. Über die Sinnhaftigkeit beider Projekte lässt sich ausgiebig streiten; insbesondere über deren Kombination.
