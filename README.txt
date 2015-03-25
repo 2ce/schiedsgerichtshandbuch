@@ -1,1 +1,1 @@
-Dies ist ein Projekt für ein anderes Projekt. Eines von beiden ist grundsätzlich sinnvoll, beim anderen streiten sich die Geister stark.
+Dies ist ein Projekt für ein anderes Projekt. Über die Sinnhaftigkeit beider Projekte lässt sich ausgiebig streiten; insbesondere über die Kombination.
