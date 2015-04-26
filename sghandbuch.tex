@@ -1,0 +1,79 @@
+\documentclass{sghandbuch}
+
+\newcommand*{\documentversion}{Milestone 1}
+\author{Simon Gauseweg \and Florian Zumkeller-Quast}
+\title{Schiedsgerichtshandbuch\\
+für die Piratenpartei Deutschland und Untgliederungen\\
+\hfill\break
+\hfill\break
+\normalsize{\documentversion}}
+
+\usepackage{blindtext}
+\addbibresource{sghandbuch.bib}
+\newindex[Urteilsverzeichnis]{jurisdiction}
+\newindex[Stichwortverzeichnis]{idx}
+\newindex[Paragraphenverzeichnis]{paridx}
+
+% \usepackage{refsection}
+
+\begin{document}
+
+\maketitle
+
+\onecolumn			% Einspaltenlayout anschalten
+\thispagestyle{plain}		% Seitenummerierung eine Seite unterdrücken
+\hfill				% Zentrierung 
+\vfill				% Zentrierung
+\begin{quote}
+\centering			% Zentrierung
+\itshape
+\Huge
+Eine Meinung zu haben gehört zum Berufsbild eines Richters.
+\par
+\begin{flushright}
+\Large
+\normalfont
+-- (Unbekannt, iirc. Hans-Jürgen Papier)
+\end{flushright}
+\end{quote}
+\hfill				% Zentrierung
+\vfill				% Zentrierung
+\clearpage			% Seitenende
+\twocolumn			% Wieder ins Zweitspaltenlayout wechselns
+
+\tableofcontents
+
+
+\input{Einleitung.tex}
+
+\input{Standardworkflow-Anrufung.tex}
+
+\input{Gerichtszusammensetzung.tex}
+
+\input{Verfahrensablauf.tex}
+
+\input{Einstweiliger-Rechtsschutz.tex}
+
+\input{Zulaessigkeit.tex}
+
+\input{Normenauslegung.tex}
+
+\input{Verfahrensarten.tex}
+
+\input{Urteilsaufbau.tex}
+
+\input{Dokumentation.tex}
+
+\input{Instanzenzug.tex}
+
+\appendix
+
+
+\onecolumn
+\printbibliography[heading=bibliography]
+\twocolumn
+
+\printindex[jurisdiction]
+
+
+\end{document}

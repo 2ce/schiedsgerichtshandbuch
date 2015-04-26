@@ -1,0 +1,240 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{sghandbuch}[2015/04/19 SG Handbuch Package CC-BY-SA-NC Florian Zumkeller-Quast]
+
+% \RequirePackage{kvoptions}
+% \DeclareStringOption[Schiedsgerichtshandbuch CC-BY-SA-NC Florian Zumkeller-Quast]{doctitle}
+% \DeclareStringOption[Schiedsgerichtshandbuch CC-BY-SA-NC Florian Zumkeller-Quast]{docauthor}
+
+\RequirePackage{scrjura}
+\RequirePackage[hyperref=true]{scrhack}
+\RequirePackage{hyperref}
+\RequirePackage{xpatch}
+
+\RequirePackage{enumerate}
+% \RequirePackage{makeidx}
+\RequirePackage[useindex,makeindex]{splitidx}
+
+% \RequirePackage[utf8]{inputenc}
+\RequirePackage[ngerman]{babel}
+\RequirePackage[babel,german=guillemets]{csquotes}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{titlesec}
+
+\RequirePackage[backend=biber,style=biblatex-juradiss,maxnames=4,sortcites=true,autocite=footnote,uniquename=true,sorting=sghandbuch,refsegment=chapter]{biblatex}
+% \RequirePackage[a4paper,nohead,includeall,ignoremp]{geometry} % Für debugging: showframe
+\RequirePackage[right]{eurosym}
+\RequirePackage[multiple,hang,bottom]{footmisc}
+
+\DeclareSortingScheme{sghandbuch}{
+%   \sort{\citeorder}
+  \sort{\field{author}\field{editor}}
+  \sort{\field{year}}
+  \sort{\field{month}}
+  \sort{\field{volume}}
+  \sort{\field{title}}
+}
+
+\titlespacing*{\chapter}{0pt}{-50pt}{20pt}
+
+\@addtoreset{section}{chapter}
+
+
+
+
+ 
+% usera = Entscheidungsart (z.B. Urteil/Beschluss/Vorlagebeschluss)
+% date = Entscheidungsdatum
+% userb = Aktenzeichen der Entscheidung ( z.B. I R 134/03)
+% userc = Name der Entscheidungssammlung oder der Zeitschrift der primären Fundstelle mit Band oder Jahrgang(z.B. BGHZ 134 oder NJW 2005)
+% userd = Erste Seite des Urteils der primären Fundstelle
+% postnote = Konkrete Fundstelle des Zitats
+% journaltitle = Zeitschriftenname der sekundären Fundstelle
+% usere = Zeitschriftenjahrgang der sekundären Fundstelle
+% pages = Erste Seite des Urteils der sekundären Fundstelle
+% userf = Entscheidungsname 
+%
+% Format Aktenzeichen von Urteilen deaktivieren weil halt
+% \DeclareFieldFormat[jurisdiction]{userb}{--\addnbspace Az\adddot\addnbspace#1}
+% \DeclareFieldFormat[list:jurisdiction]{userb}{#1}
+\DeclareFieldFormat[jurisdiction]{userb}{#1}
+
+\DeclareBibliographyDriver{cite:jurisdiction}{%
+  \index[jurisdiction]{\iffieldundef{userb}{\thefield{sign}}{\thefield{userb}}}
+  \iffieldundef{usera}{\printfield{decision}}{\printfield{usera}}\space%Urteil oder Beschluss
+  v\adddot\addspace%
+  \printdate\addspace%
+  --\addnbspace Az\adddot\addnbspace\iffieldundef{userb}{\printfield{sign}}{\printfield{userb}}% Aktenzeichen
+  \iffieldundef{userc}%Primaere Fundstelle (Name und Jahr) vorhanden?
+  {}%
+  {%
+    \iffieldundef{userb}{}{\space=\space}% Az angegeben? dann '=' zusätzlich raushauen!
+    \space\printfield{userc}
+  }%
+  \iffieldundef{postnote}{%Angabe einer konkreten Fundstelle?
+    \iffieldundef{userc}{}{%
+      \iffieldundef{userd}{}{% primär Fundstelle 
+	\addcomma\space%
+        \printfield{userd}%
+      }%
+    }% Erste Seite der primären Fundstelle 
+    \iffieldundef{journaltitle}{}{%Sekundäre Fundstelle vorhanden?
+      \addspace\mkbibparens{%
+	=\space%
+	\printfield{journaltitle}\space%Zeitschriftentitel
+	\printfield{usere}\addcomma\space%Zeitschriftenjahrgang
+	\printfield{pages}%
+      }%Erste Seite der Zeitschriftenfundstelle
+    }%
+    \iffieldundef{userf}{}{%Entscheidungsname vorhanden?
+      \addspace\mkbibparens{\printfield{userf}}%
+    }%
+  }%
+  {}%
+}%
+
+% \DeclareBibliographyDriver{list:jurisdiction}{%
+%   \usebibmacro{author/editor}%
+%   \setunit{\labelnamepunct}\newblock%
+%   \iffieldundef{userb}{\printfield{sign}}{\printfield{userb}}% Aktenzeichen
+% }
+
+\DeclareBibliographyDriver{list:jurisdiction}{%
+%   \printnames{labelname}%
+%   \usebibmacro{author/editor}%
+%   \newblock%
+  \printfield{userb}% Aktenzeichen
+}
+
+\DeclareBibliographyDriver{list:article}{%
+  \usebibmacro{author/editor}%
+  \setunit{\labelnamepunct}\newblock%
+  \newunit\newblock
+  \iffieldundef{shorttitle}{%
+    \printfield{title}%
+  }{%
+    \printfield{shorttitle}%
+  }%
+}
+
+\DeclareBibliographyDriver{list:book}{%
+  \usebibmacro{author/editor}%
+  \setunit{\labelnamepunct}\newblock%
+  \newunit\newblock
+  \iffieldundef{shorttitle}{%
+    \printfield{title}%
+  }{%
+    \printfield{shorttitle}%
+  }%
+}
+% 
+% \DeclareBibliographyDriver{list:thesis}{%
+%   \usebibmacro{author/editor}%
+%   \setunit{\labelnamepunct}\newblock%
+%   \newunit\newblock%
+%   Thesis\addcomma\addspace\printfield{school}\addcomma\addspace\printfield{year}
+%   \newunit\newblock%
+%   \iffieldundef{shorttitle}{%
+%     \printfield{title}%
+%   }{%
+%     \printfield{shorttitle}%
+%   }%
+% }
+
+\DeclareBibliographyDriver{cite:thesis}{%
+  \usebibmacro{author/editor}%
+  \setunit{\labelnamepunct}\newblock%
+  \newunit\newblock%
+  Thesis\addcomma\addspace\printfield{school}\addcomma\addspace\printfield{year}
+%   \newunit\newblock%
+%   \iffieldundef{shorttitle}{%
+%     \printfield{title}%
+%   }{%
+%     \printfield{shorttitle}%
+%   }%
+}
+
+\DeclareBibliographyDriver{list:*}{%
+  \printnames{labelname}%
+%   \usebibmacro{author/editor}%
+  \setunit{\labelnamepunct}\newblock%
+  \printfield{year}%
+  \newunit\newblock%
+  \iffieldundef{shorttitle}{%
+    \printfield{title}%
+  }{%
+    \printfield{shorttitle}%
+  }%
+}%
+
+\DeclareBibliographyDriver{jurisdiction}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{author/editor}%
+  \setunit{\labelnamepunct}\newblock
+  \iffieldundef{usera}{\printfield{decision}}{\printfield{usera}}\space%Urteil oder Beschluss
+  v\adddot\addspace%
+  \printdate\addspace%
+  --\addnbspace Az\adddot\addnbspace\iffieldundef{userb}{\printfield{sign}}{\printfield{userb}}% Aktenzeichen
+  \newunit\newblock%
+  \textit{\printtext{abrufbar unter}}\addcolon\space
+  \usebibmacro{url+urldate}%
+  \newunit\newblock
+  \newunit\newblock
+  \usebibmacro{finentry}%
+}%
+
+\renewcommand*{\postnotedelim}{%
+  \ifthenelse{\equal{\thefield{entrytype}}{jurisdiction}}{%
+    \addnbspace%
+  }{%
+    \addcomma\space%
+  }%
+}%
+
+%% 
+% For whatever reason \addsemicolon seems not to work with jurisdiction quotes
+%
+\renewcommand*{\multicitedelim}{;\addspace}%
+
+\let\printshortbibliography\printbibliography
+\xpatchcmd{\printshortbibliography}{\blx@printbibliography}{\blx@printshortbibliography}{\blx@warning{Patch printshortbibliography successful}}{\blx@warning{Patch printshortbibliography failed}}
+
+\let\blx@printshortbibliography\blx@printbibliography
+\xpatchcmd{\blx@printshortbibliography}{\blx@bibliography}{\blx@shortbibliography}{\blx@warning{Patch blx@printshortbibliography successful}}{\blx@warning{Patch blx@printshortbibliography failed}}
+
+\let\blx@shortbibliography\blx@bibliography
+\xpatchcmd{\blx@shortbibliography}{\blx@bibitem}{\blx@shortbibitem}{\blx@warning{Patch blx@shortbibliography successful}}{\blx@warning{Patch blx@shortbibliography failed}}
+
+\let\blx@shortbibitem\blx@bibitem
+% \xpatchcmd{\blx@shortbibitem}{\blx@getdata}{\blx@getshortdata}{\blx@warning{Patch blx@shortbibitem successful}}{\blx@warning{Patch blx@shortbibitem failed}}
+\xpatchcmd{\blx@shortbibitem}{\blx@driver}{\blx@shortdriver}{\blx@warning{Patch blx@shortbibitem successful}}{\blx@warning{Patch blx@shortbibitem failed}}
+
+  
+\def\blx@shortdriver#1{%
+  \ifcsdef{blx@bbx@list:#1}{%
+    \csuse{blx@bbx@list:#1}%
+  }{%
+    \ifcsdef{blx@bbx@list:*}{%
+      \blx@warning{No driver for entry type 'list:#1'.\MessageBreak Using fallback driver}%
+      \csuse{blx@bbx@list:*}%
+    }{%
+      \blx@error{No driver found}{I can't find a driver for the entry type '\abx@field@entrytype '\MessageBreak and there is no fallback driver either}%
+    }%
+  }%
+}%
+
+% Chapterbibheader
+\defbibheading{chapterbibliography}[\bibname]{\par{}\textbf{#1:\space}}
+
+\newcommand{\chapterbib}{%
+  \parskip=5ex%
+  \par%
+  \parskip=1ex%
+  \printshortbibliography[segment=\therefsegment,title={Urteile}, type=jurisdiction,heading=chapterbibliography]%
+  \printshortbibliography[segment=\therefsegment,title={Andere Literatur}, nottype=jurisdiction,heading=chapterbibliography]%
+}%
+
+\newcommand{\chapterpreamble}[1]{
+  \setchapterpreamble{\small\itshape #1}
+}
+
+\endinput
