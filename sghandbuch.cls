@@ -50,6 +50,9 @@
     pdflang={de}
 }
 
+
+\renewcommand{\nomname}{Abkürzungsverzeichnis}
+
 % \RequirePackage{helvet}
 % \RequirePackage{sourcesanspro}
 \RequirePackage{lmodern}

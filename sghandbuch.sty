@@ -14,6 +14,8 @@
 \RequirePackage{enumitem}
 % \RequirePackage{makeidx}
 \RequirePackage[useindex,makeindex]{splitidx}
+\RequirePackage[intoc]{nomencl}
+\RequirePackage{doc}
 
 % \RequirePackage[utf8]{inputenc}
 \RequirePackage[ngerman]{babel}
@@ -34,6 +36,17 @@
 % §§ Ligatur
 % Geklaut aus dem Package Jurabib
 \providecommand*{\SSS}{\S\kern-.8pt\S\relax}%
+
+\renewenvironment{theindex}{%
+  \columnseprule \z@
+  \columnsep 70\p@
+  \idx@heading%
+  \index@preamble\par\nobreak
+  \thispagestyle{\indexpagestyle}\parindent\z@
+  \setlength{\parskip}{\z@ \@plus .3\p@}%
+  \setlength{\parfillskip}{\z@ \@plus 1fil}%
+  \let\item\@idxitem
+}{\clearpage}  
 
 \DeclareSortingScheme{sghandbuch}{
 %   \sort{\citeorder}
@@ -246,5 +259,7 @@
 \newcommand{\chapterpreamble}[1]{
   \setchapterpreamble{\small\itshape #1}
 }
+
+\RequirePackage{minitoc}
 
 \endinput
