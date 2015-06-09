@@ -12,7 +12,7 @@ xelatex sghandbuch
 xelatex sghandbuch
 
 # Build index
-splitindex sghandbuch
+splitindex sghandbuch -- -s sghandbuch.ist
 
 # Build nomenclature / abbreviation index
 makeindex sghandbuch.nlo -s nomencl.ist -o sghandbuch.nls
