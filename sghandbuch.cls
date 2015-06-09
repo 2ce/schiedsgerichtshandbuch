@@ -51,6 +51,7 @@
 }
 
 % \RequirePackage{helvet}
-\RequirePackage{sourcesanspro}
-\renewcommand{\familydefault}{\sfdefault}
+% \RequirePackage{sourcesanspro}
+\RequirePackage{lmodern}
+% \renewcommand{\familydefault}{\sfdefault}
 \geometry{inner=2cm,outer=2cm,top=2cm,bottom=2cm}
