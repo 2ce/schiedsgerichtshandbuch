@@ -5,8 +5,8 @@
 
 \DeclareDefaultOption{\PassOptionsToClass{\CurrentOption}{scrbook}}
 
-\DeclareStringOption[Schiedsgerichtshandbuch CC-BY-SA-NC Florian Zumkeller-Quast]{doctitle}
-\DeclareStringOption[Schiedsgerichtshandbuch CC-BY-SA-NC Florian Zumkeller-Quast]{docauthor}
+\DeclareStringOption[Schiedsgerichtshandbuch CC-BY-SA-NC Simon Gauseweg \& Florian Zumkeller-Quast]{doctitle}
+\DeclareStringOption[Schiedsgerichtshandbuch CC-BY-SA-NC Simon Gauseweg \& Florian Zumkeller-Quast]{docauthor}
 
 \ProcessOptions\relax
 
