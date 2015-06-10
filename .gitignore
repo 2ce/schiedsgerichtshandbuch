@@ -4,6 +4,11 @@
 *.blg
 *.idx
 *.log
+*.maf
+*.mtc
+*.mtc0
+*.nlo
+*.nls
 *.out
 *.pdf
 *.dvi
