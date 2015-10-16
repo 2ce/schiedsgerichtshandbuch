@@ -1,0 +1,49 @@
+%\blx@inputonce{blx-dm.def}{biblatex default data model}{}{}{}{}
+ 
+  
+  % userc = Name der Entscheidungssammlung oder der Zeitschrift der primären Fundstelle mit Band oder Jahrgang(z.B. BGHZ 134 oder NJW 2005)
+% userd = Erste Seite des Urteils der primären Fundstelle
+% postnote = Konkrete Fundstelle des Zitats
+% journaltitle = Zeitschriftenname der sekundären Fundstelle
+% usere = Zeitschriftenjahrgang der sekundären Fundstelle
+% pages = Erste Seite des Urteils der sekundären Fundstelle
+% userf = Entscheidungsname 
+%
+\DeclareDatamodelEntrytypes{ruling}
+\DeclareDatamodelFields[type=field,datatype=literal]{
+  court,
+  shortcourt,
+  sign,
+  decisiontype,
+  decisioncollection,
+  decisioncollectionpage,
+  journalyear,
+  journalpage,
+  decisionname
+}
+\DeclareDatamodelEntryfields[ruling]{
+  author,
+  shortauthor,
+  date,
+  court,
+  shortcourt,
+  sign,
+  gender,
+  url,
+  decisiontype,
+  decisioncollection,
+  decisioncollectionpage,
+  journaltitle,
+  journalyear,
+  journalpage,
+  decisionname
+}
+
+% Format 
+\DeclareFieldFormat[ruling]{shortauthor}{#1}
+\DeclareFieldFormat[ruling]{court}{#1}
+\DeclareFieldFormat[ruling]{shortcourt}{#1}
+\DeclareFieldFormat[ruling]{sign}{#1}
+\DeclareFieldFormat[ruling]{decisiontype}{#1}
+
+\endinput

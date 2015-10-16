@@ -1,0 +1,67 @@
+% sghandbuch.cbx
+
+\ProvidesFile{sghandbuch.bbx}[2015/10/17 v0.1 biblatex citation style]
+
+\RequireCitationStyle{biblatex-juradiss}%
+
+% decisiontype = Entscheidungsart (z.B. Urteil/Beschluss/Vorlagebeschluss)
+% date = Entscheidungsdatum
+% sign = Aktenzeichen der Entscheidung ( z.B. I R 134/03)
+% decisioncollection = Name der Entscheidungssammlung oder der Zeitschrift der primären Fundstelle mit Band oder Jahrgang(z.B. BGHZ 134 oder NJW 2005)
+% decisioncollectionpage = Erste Seite des Urteils der primären Fundstelle
+% postnote = Konkrete Fundstelle des Zitats
+% journaltitle = Zeitschriftenname der sekundären Fundstelle
+% journalyear = Zeitschriftenjahrgang der sekundären Fundstelle
+% journalpage = Erste Seite des Urteils der sekundären Fundstelle
+% decisionname = Entscheidungsname 
+%
+
+\DeclareBibliographyDriver{cite:ruling}{%
+  \index[ruling]{\thefield{court}!\iffieldundef{userb}{\thefield{sign}}{\thefield{userb}}}
+%   \index[ruling]{\thefield{court}\!\iffieldundef{userb}{\thefield{sign}}{\thefield{userb}}}
+  \printfield{decisiontype}\space%Urteil oder Beschluss
+  v\adddot\addspace%
+  \printdate\addspace%
+  --\addnbspace Az\adddot\addnbspace\printfield{sign}% Aktenzeichen
+  \iffieldundef{decisioncollection}%Primaere Fundstelle (Name und Jahr) vorhanden?
+  {}%
+  {%
+    \iffieldundef{sign}{}{\space=\space}% Az angegeben? dann '=' zusätzlich raushauen!
+    \space\printfield{decisioncollection}
+  }%
+  \iffieldundef{postnote}{%Angabe einer konkreten Fundstelle?
+    \iffieldundef{decisioncollection}{}{%
+      \iffieldundef{decisioncollectionpage}{}{% primär Fundstelle 
+	\addcomma\space%
+        \printfield{decisioncollectionpage}%
+      }%
+    }% Erste Seite der primären Fundstelle 
+    \iffieldundef{journaltitle}{}{%Sekundäre Fundstelle vorhanden?
+      \addspace\mkbibparens{%
+	=\space%
+	\printfield{journaltitle}\space%Zeitschriftentitel
+	\printfield{journalyear}\addcomma\space%Zeitschriftenjahrgang
+	\printfield{journalpage}%
+      }%Erste Seite der Zeitschriftenfundstelle
+    }%
+    \iffieldundef{decisionname}{}{%Entscheidungsname vorhanden?
+      \addspace\mkbibparens{\printfield{decisionname}}%
+    }%
+  }%
+  {}%
+}%
+
+\DeclareBibliographyDriver{cite:thesis}{%
+  \usebibmacro{author/editor}%
+  \setunit{\labelnamepunct}\newblock%
+  \newunit\newblock%
+  Thesis\addcomma\addspace\printfield{school}\addcomma\addspace\printfield{year}
+%   \newunit\newblock%
+%   \iffieldundef{shorttitle}{%
+%     \printfield{title}%
+%   }{%
+%     \printfield{shorttitle}%
+%   }%
+}
+
+\endinput

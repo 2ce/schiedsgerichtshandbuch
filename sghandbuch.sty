@@ -27,7 +27,7 @@
 \RequirePackage[T1]{fontenc}
 \RequirePackage{titlesec}
 
-\RequirePackage[backend=biber,style=biblatex-juradiss,maxnames=4,sortcites=true,autocite=footnote,uniquename=true,sorting=sghandbuch,refsegment=chapter]{biblatex}
+\RequirePackage[backend=biber,datamodel=sghandbuch,style=sghandbuch,citestyle=sghandbuch,maxnames=4,sortcites=true,autocite=footnote,uniquename=true,sorting=sghandbuch,refsegment=chapter]{biblatex}
 % \RequirePackage[a4paper,nohead,includeall,ignoremp]{geometry} % Für debugging: showframe
 \RequirePackage[right]{eurosym}
 \RequirePackage[multiple,hang,bottom]{footmisc}
@@ -57,9 +57,10 @@
 
 \DeclareSortingScheme{sghandbuch}{
 %   \sort{\citeorder}
-  \sort{\field{author}\field{editor}}
+  \sort{\field{author}\field{editor}\field{court}}
   \sort{\field{year}}
   \sort{\field{month}}
+  \sort{\field{date}}
   \sort{\field{volume}}
   \sort{\field{title}}
 }
@@ -67,147 +68,10 @@
 \titlespacing*{\chapter}{0pt}{-50pt}{20pt}
 
 \@addtoreset{section}{chapter}
- 
-% usera = Entscheidungsart (z.B. Urteil/Beschluss/Vorlagebeschluss)
-% date = Entscheidungsdatum
-% userb = Aktenzeichen der Entscheidung ( z.B. I R 134/03)
-% userc = Name der Entscheidungssammlung oder der Zeitschrift der primären Fundstelle mit Band oder Jahrgang(z.B. BGHZ 134 oder NJW 2005)
-% userd = Erste Seite des Urteils der primären Fundstelle
-% postnote = Konkrete Fundstelle des Zitats
-% journaltitle = Zeitschriftenname der sekundären Fundstelle
-% usere = Zeitschriftenjahrgang der sekundären Fundstelle
-% pages = Erste Seite des Urteils der sekundären Fundstelle
-% userf = Entscheidungsname 
+
 %
-% Format Aktenzeichen von Urteilen deaktivieren weil halt
-% \DeclareFieldFormat[jurisdiction]{userb}{--\addnbspace Az\adddot\addnbspace#1}
-% \DeclareFieldFormat[list:jurisdiction]{userb}{#1}
-\DeclareFieldFormat[jurisdiction]{userb}{#1}
-
-\DeclareBibliographyDriver{cite:jurisdiction}{%
-  \index[jurisdiction]{\iffieldundef{userb}{\thefield{sign}}{\thefield{userb}}}
-  \iffieldundef{usera}{\printfield{decision}}{\printfield{usera}}\space%Urteil oder Beschluss
-  v\adddot\addspace%
-  \printdate\addspace%
-  --\addnbspace Az\adddot\addnbspace\iffieldundef{userb}{\printfield{sign}}{\printfield{userb}}% Aktenzeichen
-  \iffieldundef{userc}%Primaere Fundstelle (Name und Jahr) vorhanden?
-  {}%
-  {%
-    \iffieldundef{userb}{}{\space=\space}% Az angegeben? dann '=' zusätzlich raushauen!
-    \space\printfield{userc}
-  }%
-  \iffieldundef{postnote}{%Angabe einer konkreten Fundstelle?
-    \iffieldundef{userc}{}{%
-      \iffieldundef{userd}{}{% primär Fundstelle 
-	\addcomma\space%
-        \printfield{userd}%
-      }%
-    }% Erste Seite der primären Fundstelle 
-    \iffieldundef{journaltitle}{}{%Sekundäre Fundstelle vorhanden?
-      \addspace\mkbibparens{%
-	=\space%
-	\printfield{journaltitle}\space%Zeitschriftentitel
-	\printfield{usere}\addcomma\space%Zeitschriftenjahrgang
-	\printfield{pages}%
-      }%Erste Seite der Zeitschriftenfundstelle
-    }%
-    \iffieldundef{userf}{}{%Entscheidungsname vorhanden?
-      \addspace\mkbibparens{\printfield{userf}}%
-    }%
-  }%
-  {}%
-}%
-
-% \DeclareBibliographyDriver{list:jurisdiction}{%
-%   \usebibmacro{author/editor}%
-%   \setunit{\labelnamepunct}\newblock%
-%   \iffieldundef{userb}{\printfield{sign}}{\printfield{userb}}% Aktenzeichen
-% }
-
-\DeclareBibliographyDriver{list:jurisdiction}{%
-%   \printnames{labelname}%
-%   \usebibmacro{author/editor}%
-%   \newblock%
-  \printfield{userb}% Aktenzeichen
-}
-
-\DeclareBibliographyDriver{list:article}{%
-  \usebibmacro{author/editor}%
-  \setunit{\labelnamepunct}\newblock%
-  \newunit\newblock
-  \iffieldundef{shorttitle}{%
-    \printfield{title}%
-  }{%
-    \printfield{shorttitle}%
-  }%
-}
-
-\DeclareBibliographyDriver{list:book}{%
-  \usebibmacro{author/editor}%
-  \setunit{\labelnamepunct}\newblock%
-  \newunit\newblock
-  \iffieldundef{shorttitle}{%
-    \printfield{title}%
-  }{%
-    \printfield{shorttitle}%
-  }%
-}
-% 
-% \DeclareBibliographyDriver{list:thesis}{%
-%   \usebibmacro{author/editor}%
-%   \setunit{\labelnamepunct}\newblock%
-%   \newunit\newblock%
-%   Thesis\addcomma\addspace\printfield{school}\addcomma\addspace\printfield{year}
-%   \newunit\newblock%
-%   \iffieldundef{shorttitle}{%
-%     \printfield{title}%
-%   }{%
-%     \printfield{shorttitle}%
-%   }%
-% }
-
-\DeclareBibliographyDriver{cite:thesis}{%
-  \usebibmacro{author/editor}%
-  \setunit{\labelnamepunct}\newblock%
-  \newunit\newblock%
-  Thesis\addcomma\addspace\printfield{school}\addcomma\addspace\printfield{year}
-%   \newunit\newblock%
-%   \iffieldundef{shorttitle}{%
-%     \printfield{title}%
-%   }{%
-%     \printfield{shorttitle}%
-%   }%
-}
-
-\DeclareBibliographyDriver{list:*}{%
-  \printnames{labelname}%
-%   \usebibmacro{author/editor}%
-  \setunit{\labelnamepunct}\newblock%
-  \printfield{year}%
-  \newunit\newblock%
-  \iffieldundef{shorttitle}{%
-    \printfield{title}%
-  }{%
-    \printfield{shorttitle}%
-  }%
-}%
-
-\DeclareBibliographyDriver{jurisdiction}{%
-  \usebibmacro{bibindex}%
-  \usebibmacro{author/editor}%
-  \setunit{\labelnamepunct}\newblock
-  \iffieldundef{usera}{\printfield{decision}}{\printfield{usera}}\space%Urteil oder Beschluss
-  v\adddot\addspace%
-  \printdate\addspace%
-  --\addnbspace Az\adddot\addnbspace\iffieldundef{userb}{\printfield{sign}}{\printfield{userb}}% Aktenzeichen
-  \newunit\newblock%
-  \textit{\printtext{abrufbar unter}}\addcolon\space
-  \usebibmacro{url+urldate}%
-  \newunit\newblock
-  \newunit\newblock
-  \usebibmacro{finentry}%
-}%
-
+% has to be done after loading biblatex
+%
 \renewcommand*{\postnotedelim}{%
   \ifthenelse{\equal{\thefield{entrytype}}{jurisdiction}}{%
     \addnbspace%
@@ -221,6 +85,9 @@
 %
 \renewcommand*{\multicitedelim}{;\addspace}%
 
+%
+% Create the short chapterbib commands
+%
 \let\printshortbibliography\printbibliography
 \xpatchcmd{\printshortbibliography}{\blx@printbibliography}{\blx@printshortbibliography}{\blx@warning{Patch printshortbibliography successful}}{\blx@warning{Patch printshortbibliography failed}}
 
@@ -234,7 +101,6 @@
 % \xpatchcmd{\blx@shortbibitem}{\blx@getdata}{\blx@getshortdata}{\blx@warning{Patch blx@shortbibitem successful}}{\blx@warning{Patch blx@shortbibitem failed}}
 \xpatchcmd{\blx@shortbibitem}{\blx@driver}{\blx@shortdriver}{\blx@warning{Patch blx@shortbibitem successful}}{\blx@warning{Patch blx@shortbibitem failed}}
 
-  
 \def\blx@shortdriver#1{%
   \ifcsdef{blx@bbx@list:#1}{%
     \csuse{blx@bbx@list:#1}%
@@ -251,20 +117,20 @@
 % Chapterbibheader
 \defbibheading{chapterbibliography}[\bibname]{\par{}\textbf{#1:\space}}
 
-% Bibheader
-\defbibheading{bibliography}[\bibname]{\chapter*{#1}\addcontentsline{toc}{chapter}{#1}}
-
 \newcommand{\chapterbib}{%
   \parskip=5ex%
   \par%
   \parskip=1ex%
-  \printshortbibliography[segment=\therefsegment,title={Urteile}, type=jurisdiction,heading=chapterbibliography]%
-  \printshortbibliography[segment=\therefsegment,title={Andere Literatur}, nottype=jurisdiction,heading=chapterbibliography]%
+  \printshortbibliography[segment=\therefsegment,title={Urteile}, type=ruling,heading=chapterbibliography]%
+  \printshortbibliography[segment=\therefsegment,title={Andere Literatur}, nottype=ruling,heading=chapterbibliography]%
 }%
 
 \newcommand{\chapterpreamble}[1]{
   \setchapterpreamble{\small\itshape #1}
 }
+
+% Bibheader
+\defbibheading{bibliography}[\bibname]{\chapter*{#1}\addcontentsline{toc}{chapter}{#1}}
 
 \RequirePackage{minitoc}
 
