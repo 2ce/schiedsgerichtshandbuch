@@ -248,6 +248,9 @@
 % Chapterbibheader
 \defbibheading{chapterbibliography}[\bibname]{\par{}\textbf{#1:\space}}
 
+% Bibheader
+\defbibheading{bibliography}[\bibname]{\chapter*{#1}\addcontentsline{toc}{chapter}{#1}}
+
 \newcommand{\chapterbib}{%
   \parskip=5ex%
   \par%

@@ -16,6 +16,7 @@
   twoside,		%
   DIV=calc,		% führt die Satzspiegelberechnung neu aus
   BCOR=8mm,		% Bindekorrektur, liegt je nach Druck zwischen 8-15mm
+  index=totoc,		% Indizes in die TOC
 ]{scrbook}
 
 \RequirePackage{sghandbuch}
