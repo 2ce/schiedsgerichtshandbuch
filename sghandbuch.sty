@@ -6,8 +6,10 @@
 % \DeclareStringOption[Schiedsgerichtshandbuch CC-BY-SA-NC Florian Zumkeller-Quast]{docauthor}
 
 \RequirePackage{scrjura}
+\RequirePackage{titletoc}
+\RequirePackage[toctitles]{titlesec}
 \RequirePackage[hyperref=true]{scrhack}
-\RequirePackage{hyperref}
+\RequirePackage[hidelinks]{hyperref}
 \RequirePackage{xpatch}
 \RequirePackage{graphicx}
 
@@ -25,14 +27,54 @@
 \RequirePackage[ngerman]{babel}
 \RequirePackage[babel,german=guillemets]{csquotes}
 \RequirePackage[T1]{fontenc}
-\RequirePackage{titlesec}
 
 \RequirePackage[backend=biber,datamodel=sghandbuch,style=sghandbuch,citestyle=sghandbuch,maxnames=4,sortcites=true,autocite=footnote,uniquename=true,sorting=sghandbuch,refsegment=chapter]{biblatex}
 % \RequirePackage[a4paper,nohead,includeall,ignoremp]{geometry} % Für debugging: showframe
 \RequirePackage[right]{eurosym}
 \RequirePackage[multiple,hang,bottom]{footmisc}
 
+% list formatting
 \setlist{nolistsep}
+
+
+%
+% TOC stuff
+%
+\setcounter{secnumdepth}{3}% add numbering down to subsubsection
+\setcounter{tocdepth}{1}
+
+\providecommand*{\chaptertoc}{%
+  \startcontents[chapterstoc]% kind
+  \printcontents[chapterstoc]{}{1}{\setcounter{tocdepth}{2}}% kind, prefix, top, init-code
+  \vspace*{1pc}\hrule\vspace*{2pc}%
+}
+
+\let\oldchapterpreamble\setchapterpreamble% Store \chapter in \oldchapter
+\renewcommand{\setchapterpreamble}[1]{%
+  \oldchapterpreamble{%
+    \strut #1%
+    \vspace*{0.5pc}\hrule\vspace*{0.5pc}%
+  }%
+}
+
+\let\oldchapter\chapter% Store \chapter in \oldchapter
+\providecommand*{\newchapter}[1]{%
+  \oldchapter{#1}%
+  \chaptertoc%
+}%
+\let\chapter\oldchapter%
+
+\providecommand*{\maincontent}{%
+  \let\oldchapter\chapter% 
+  \let\chapter\newchapter% 
+}
+
+\let\oldappendix\appendix% 
+\renewcommand{\appendix}{%
+  \let\chapter\oldchapter%
+  \oldappendix%
+}
+
 
 % Kommando für Zitate, ist schachtelbar
 \providecommand*{\Zitat}[1]{\emph{\enquote{#1}}}
@@ -131,7 +173,5 @@
 
 % Bibheader
 \defbibheading{bibliography}[\bibname]{\chapter*{#1}\addcontentsline{toc}{chapter}{#1}}
-
-\RequirePackage{minitoc}
 
 \endinput
