@@ -5,9 +5,9 @@
 \RequireBibliographyStyle{biblatex-juradiss}%
 
 \DeclareBibliographyDriver{list:ruling}{%
-%   \printnames{labelname}%
-%   \usebibmacro{author/editor}%
-%   \newblock%
+  \iffieldundef{shortcourt}{}{%
+    \printfield{shortcourt}\space--\space% court abbreviation
+  }%
   \printfield{sign}% Aktenzeichen
 }
 
