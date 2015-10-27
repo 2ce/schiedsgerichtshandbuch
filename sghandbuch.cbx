@@ -19,6 +19,9 @@
 \DeclareBibliographyDriver{cite:ruling}{%
   \index[ruling]{\thefield{court}!\iffieldundef{userb}{\thefield{sign}}{\thefield{userb}}}
 %   \index[ruling]{\thefield{court}\!\iffieldundef{userb}{\thefield{sign}}{\thefield{userb}}}
+  \iffieldundef{shortcourt}{}{%
+    \printfield{shortcourt}\space--\space% court abbreviation
+  }%
   \printfield{decisiontype}\space%Urteil oder Beschluss
   v\adddot\addspace%
   \printdate\addspace%
@@ -29,7 +32,7 @@
     \iffieldundef{sign}{}{\space=\space}% Az angegeben? dann '=' zusätzlich raushauen!
     \space\printfield{decisioncollection}
   }%
-  \iffieldundef{postnote}{%Angabe einer konkreten Fundstelle?
+%   \iffieldundef{postnote}{%Angabe einer konkreten Fundstelle?
     \iffieldundef{decisioncollection}{}{%
       \iffieldundef{decisioncollectionpage}{}{% primär Fundstelle 
 	\addcomma\space%
@@ -47,8 +50,8 @@
     \iffieldundef{decisionname}{}{%Entscheidungsname vorhanden?
       \addspace\mkbibparens{\printfield{decisionname}}%
     }%
-  }%
-  {}%
+%   }%
+%   {}%
 }%
 
 \DeclareBibliographyDriver{cite:thesis}{%
