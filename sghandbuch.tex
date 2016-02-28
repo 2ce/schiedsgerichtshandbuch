@@ -18,10 +18,15 @@ für die Piratenpartei Deutschland und Untgliederungen\\
 
 \begin{document}
 
-\maketitle
+\frontmatter
+\pagenumbering{Roman}
 
+\maketitle
+\thispagestyle{empty}		% Seitennummerierung für Titelseite unterdrücken
+
+% Widmung (Zitat)
 \onecolumn			% Einspaltenlayout anschalten
-\thispagestyle{plain}		% Seitenummerierung eine Seite unterdrücken
+\thispagestyle{empty}		% Seitennummerierung eine Seite unterdrücken
 \hfill				% Zentrierung 
 \vfill				% Zentrierung
 \begin{quote}
@@ -48,6 +53,7 @@ Eine Meinung zu haben gehört zum Berufsbild eines Richters.
 \input{Einleitung.tex}
 
 \maincontent
+\mainmatter
 
 \input{Organisation.tex}
 
