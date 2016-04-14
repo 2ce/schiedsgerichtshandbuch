@@ -6,6 +6,7 @@
 \setboolean{isDraft}{false}
 
 \RequirePackage{kvoptions}
+\RequirePackage{setspace}
 
 
 \DeclareOption{draft}{%
@@ -24,7 +25,7 @@
 \ifthenelse{\boolean{isDraft}}{%
     \ClassInfo{sghandbuch}{Creating Draft Build}%
     \LoadClass[%
-        twocolumn,	%
+        onecolumn,	%
         a4paper,		%
         11pt,			%
         oneside,		%
@@ -48,8 +49,6 @@
 
 \RequirePackage{sghandbuch}
 \RequirePackage{geometry}
-
-% \newenvironment{onecolumn}{\onecolumn}{\twocolumn}
 
 %
 % Links
@@ -88,6 +87,17 @@
 
 \ifthenelse{\boolean{isDraft}}{% Draft
     \geometry{left=2cm,right=7cm,top=2cm,bottom=2cm}%
+    \newcommand{\togglecolumnmode}{\onecolumn}%
+    \let\oldmainmatter\mainmatter
+    \newcommand{\newmainmatter}{\oldmainmatter\onehalfspacing}
+    \let\mainmatter\newmainmatter
 }{%
     \geometry{inner=2cm,outer=2cm,top=2cm,bottom=2cm}%
+    \newcommand{\togglecolumnmode}{%
+        \if@twocolumn%
+            \onecolumn%
+        \else%
+            \twocolumn%
+        \fi%
+    }%
 }%
