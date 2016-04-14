@@ -1,23 +1,50 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{sghandbuch}[2015/04/19 SG Handbuch Klasse CC-BY-SA-NC Florian Zumkeller-Quast]
 
+\RequirePackage{ifthen}
+\newboolean{isDraft}
+\setboolean{isDraft}{false}
+
 \RequirePackage{kvoptions}
+
+
+\DeclareOption{draft}{%
+    \setboolean{isDraft}{true}%
+}%
 
 \DeclareDefaultOption{\PassOptionsToClass{\CurrentOption}{scrbook}}
 
 \DeclareStringOption[Schiedsgerichtshandbuch CC-BY-SA-NC Simon Gauseweg \& Florian Zumkeller-Quast]{doctitle}
 \DeclareStringOption[Schiedsgerichtshandbuch CC-BY-SA-NC Simon Gauseweg \& Florian Zumkeller-Quast]{docauthor}
 
+
+\ProcessKeyvalOptions*
 \ProcessOptions\relax
 
-\LoadClass[twocolumn,	%
-  a4paper,		%
-  11pt,			%
-  twoside,		%
-  DIV=calc,		% führt die Satzspiegelberechnung neu aus
-  BCOR=8mm,		% Bindekorrektur, liegt je nach Druck zwischen 8-15mm
-  index=totoc,		% Indizes in die TOC
-]{scrbook}
+\ifthenelse{\boolean{isDraft}}{%
+    \ClassInfo{sghandbuch}{Creating Draft Build}%
+    \LoadClass[%
+        twocolumn,	%
+        a4paper,		%
+        11pt,			%
+        oneside,		%
+        DIV=calc,		% führt die Satzspiegelberechnung neu aus
+        BCOR=8mm,		% Bindekorrektur, liegt je nach Druck zwischen 8-15mm
+        index=totoc,		% Indizes in die TOC
+    ]{scrbook}
+}{%
+    \ClassInfo{sghandbuch}{Creating Final Build}%
+    \LoadClass[%
+        twocolumn,	%
+        a4paper,		%
+        11pt,			%
+        twoside,		%
+        DIV=calc,		% führt die Satzspiegelberechnung neu aus
+        BCOR=8mm,		% Bindekorrektur, liegt je nach Druck zwischen 8-15mm
+        index=totoc,		% Indizes in die TOC
+    ]{scrbook}
+}%
+
 
 \RequirePackage{sghandbuch}
 \RequirePackage{geometry}
@@ -58,4 +85,9 @@
 % \RequirePackage{sourcesanspro}
 \RequirePackage{libertine}
 % \renewcommand{\familydefault}{\sfdefault}
-\geometry{inner=2cm,outer=2cm,top=2cm,bottom=2cm}
+
+\ifthenelse{\boolean{isDraft}}{% Draft
+    \geometry{left=2cm,right=7cm,top=2cm,bottom=2cm}%
+}{%
+    \geometry{inner=2cm,outer=2cm,top=2cm,bottom=2cm}%
+}%
