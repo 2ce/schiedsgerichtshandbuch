@@ -8,6 +8,9 @@ für die Piratenpartei Deutschland und Untgliederungen\\
 \normalsize{\documentversion}}
 
 \usepackage{blindtext}
+\ifthenelse{\boolean{isDraft}}
+	{\usepackage[onehalfspacing]{setspace}}
+	{}
 \addbibresource{sghandbuch.bib}
 \newindex[Urteilsverzeichnis]{ruling}
 \newindex[Stichwortverzeichnis]{idx}
@@ -44,7 +47,9 @@ Eine Meinung zu haben gehört zum Berufsbild eines Richters.
 \hfill				% Zentrierung
 \vfill				% Zentrierung
 \clearpage			% Seitenende
-\twocolumn			% Wieder ins Zweitspaltenlayout wechselns
+\ifthenelse{\boolean{isDraft}}	% Wenn _kein_ Draft:
+	{}
+	{\twocolumn}			% Wieder ins Zweitspaltenlayout wechselns		
 
 \renewcommand{\contentsname}{Inhaltsübersicht}
 \pdfbookmark{\contentsname}{toc}
