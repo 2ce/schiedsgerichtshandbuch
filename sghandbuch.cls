@@ -80,6 +80,11 @@
 
 \renewcommand{\nomname}{Abkürzungsverzeichnis}
 
+% Fix: Paragraphenindex / Fußnoten
+\newcommand{\indexPar}[1]{\index[paridx]{#1}}
+\newcommand{\indexRul}[1]{\index[ruling]{#1}}
+\newcommand{\indexIdx}[1]{\index[idx]{#1}}
+
 % \RequirePackage{helvet}
 % \RequirePackage{sourcesanspro}
 \RequirePackage{libertine}
