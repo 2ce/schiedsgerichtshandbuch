@@ -36,9 +36,9 @@
 }{%
     \ClassInfo{sghandbuch}{Creating Final Build}%
     \LoadClass[%
-        twocolumn,	%
-        a4paper,		%
-        11pt,			%
+        %twocolumn,	%
+        a5paper,		%
+        10pt,			%
         twoside,		%
         DIV=calc,		% führt die Satzspiegelberechnung neu aus
         BCOR=8mm,		% Bindekorrektur, liegt je nach Druck zwischen 8-15mm
@@ -97,7 +97,7 @@
     \newcommand{\newmainmatter}{\oldmainmatter\onehalfspacing}
     \let\mainmatter\newmainmatter
 }{%
-    \geometry{inner=2cm,outer=2cm,top=2cm,bottom=2cm}%
+    \geometry{inner=1.0cm,outer=2cm,top=1.3cm,bottom=1.8cm}%
     \newcommand{\togglecolumnmode}{%
         \if@twocolumn%
             \onecolumn%
