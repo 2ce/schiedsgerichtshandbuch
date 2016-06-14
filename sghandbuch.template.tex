@@ -90,12 +90,16 @@ Eine Meinung zu haben gehört zum Berufsbild eines Richters.
 
 \appendix
 \backmatter
-\pagenumbering{roman}
+
 %\togglecolumnmode
 
+\markboth{Rechtsprechungsverzeichnis}{Rechtsprechungsverzeichnis}
 \printbibliography[heading=bibliography,title={Rechtsprechungsverzeichnis}, type=ruling]
+
+\markboth{Literaturverzeichnis}{Literaturverzeichnis}
 \printbibliography[heading=bibliography,title={Literaturverzeichnis},nottype=ruling]
 
+\markboth{\nomname}{\nomname}
 \printnomenclature
 
 \setindexpreamble[ruling]{Ein Verzeichnis aller für dieses Handbuch relevanten Urteile und der Textstellen, an denen über deren Inhalt geschrieben wird.}
